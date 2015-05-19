@@ -2,9 +2,9 @@
 *
 * UI on top of main sliding area (caption, arrows, close button, etc.).
 * Built just using public methods/properties of PhotoSwipe.
-* 
+*
 */
-(function (root, factory) { 
+(function (root, factory) {
 	if (typeof define === 'function' && define.amd) {
 		define(factory);
 	} else if (typeof exports === 'object') {
@@ -45,11 +45,11 @@ var PhotoSwipeUI_Default =
 		_options,
 		_defaultUIOptions = {
 			barsSize: {top:44, bottom:'auto'},
-			closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'], 
-			timeToIdle: 4000, 
+			closeElClasses: ['item', 'caption', 'zoom-wrap', 'ui', 'top-bar'],
+			timeToIdle: 4000,
 			timeToIdleOutside: 1000,
 			loadingIndicatorDelay: 1000, // 2s
-			
+
 			addCaptionHTMLFn: function(item, captionEl /*, isFake */) {
 				if(!item.title) {
 					captionEl.children[0].innerHTML = '';
@@ -89,7 +89,7 @@ var PhotoSwipeUI_Default =
 			getTextForShare: function( /* shareButtonData */ ) {
 				return pswp.currItem.title || '';
 			},
-				
+
 			indexIndicatorSep: ' / '
 
 		},
@@ -132,12 +132,12 @@ var PhotoSwipeUI_Default =
 				}
 				_blockControlsTap = true;
 
-				// Some versions of Android don't prevent ghost click event 
+				// Some versions of Android don't prevent ghost click event
 				// when preventDefault() was called on touchstart and/or touchend.
-				// 
-				// This happens on v4.3, 4.2, 4.1, 
-				// older versions strangely work correctly, 
-				// but just in case we add delay on all of them)	
+				//
+				// This happens on v4.3, 4.2, 4.1,
+				// older versions strangely work correctly,
+				// but just in case we add delay on all of them)
 				var tapDelay = framework.features.isOldAndroid ? 600 : 30;
 				_blockControlsTapTimeout = setTimeout(function() {
 					_blockControlsTap = false;
@@ -168,8 +168,7 @@ var PhotoSwipeUI_Default =
 		_toggleShareModal = function() {
 
 			_shareModalHidden = !_shareModalHidden;
-			
-			
+
 			if(!_shareModalHidden) {
 				_toggleShareModalClass();
 				setTimeout(function() {
@@ -185,7 +184,7 @@ var PhotoSwipeUI_Default =
 					}
 				}, 300);
 			}
-			
+
 			if(!_shareModalHidden) {
 				_updateShareURLs();
 			}
@@ -207,13 +206,13 @@ var PhotoSwipeUI_Default =
 			}
 
 			window.open(target.href, 'pswp_share', 'scrollbars=yes,resizable=yes,toolbar=no,'+
-										'location=yes,width=550,height=420,top=100,left=' + 
+										'location=yes,width=550,height=420,top=100,left=' +
 										(window.screen ? Math.round(screen.width / 2 - 275) : 100)  );
 
 			if(!_shareModalHidden) {
 				_toggleShareModal();
 			}
-			
+
 			return false;
 		},
 		_updateShareURLs = function() {
@@ -238,7 +237,7 @@ var PhotoSwipeUI_Default =
 
 				shareButtonOut += '<a href="' + shareURL + '" target="_blank" '+
 									'class="pswp__share--' + shareButtonData.id + '"' +
-									(shareButtonData.download ? 'download' : '') + '>' + 
+									(shareButtonData.download ? 'download' : '') + '>' +
 									shareButtonData.label + '</a>';
 
 				if(_options.parseShareButtonOut) {
@@ -246,7 +245,7 @@ var PhotoSwipeUI_Default =
 				}
 			}
 			_shareModal.children[0].innerHTML = shareButtonOut;
-			_shareModal.children[0].onclick = _openWindowPopup;
+			// _shareModal.children[0].onclick = _openWindowPopup;
 
 		},
 		_hasCloseClass = function(target) {
@@ -293,7 +292,7 @@ var PhotoSwipeUI_Default =
 		_setupLoadingIndicator = function() {
 			// Setup loading indicator
 			if(_options.preloaderEl) {
-			
+
 				_toggleLoadingIndicator(true);
 
 				_listen('beforeChange', function() {
@@ -306,18 +305,18 @@ var PhotoSwipeUI_Default =
 						if(pswp.currItem && pswp.currItem.loading) {
 
 							if( !pswp.allowProgressiveImg() || (pswp.currItem.img && !pswp.currItem.img.naturalWidth)  ) {
-								// show preloader if progressive loading is not enabled, 
+								// show preloader if progressive loading is not enabled,
 								// or image width is not defined yet (because of slow connection)
-								_toggleLoadingIndicator(false); 
+								_toggleLoadingIndicator(false);
 								// items-controller.js function allowProgressiveImg
 							}
-							
+
 						} else {
 							_toggleLoadingIndicator(true); // hide preloader
 						}
 
 					}, _options.loadingIndicatorDelay);
-					
+
 				});
 				_listen('imageLoadComplete', function(index, item) {
 					if(pswp.currItem === item) {
@@ -337,8 +336,8 @@ var PhotoSwipeUI_Default =
 			var gap = item.vGap;
 
 			if( _fitControlsInViewport() ) {
-				
-				var bars = _options.barsSize; 
+
+				var bars = _options.barsSize;
 				if(_options.captionEl && bars.bottom === 'auto') {
 					if(!_fakeCaptionContainer) {
 						_fakeCaptionContainer = framework.createEl('pswp__caption pswp__caption--fake');
@@ -356,7 +355,7 @@ var PhotoSwipeUI_Default =
 				} else {
 					gap.bottom = bars.bottom === 'auto' ? 0 : bars.bottom;
 				}
-				
+
 				// height of top bar is static, no need to calculate it
 				gap.top = bars.top;
 			} else {
@@ -367,7 +366,7 @@ var PhotoSwipeUI_Default =
 			// Hide controls when mouse is used
 			if(_options.timeToIdle) {
 				_listen('mouseUsed', function() {
-					
+
 					framework.bind(document, 'mousemove', _onIdleMouseMove);
 					framework.bind(document, 'mouseout', _onMouseLeaveWindow);
 
@@ -414,77 +413,77 @@ var PhotoSwipeUI_Default =
 
 
 	var _uiElements = [
-		{ 
-			name: 'caption', 
+		{
+			name: 'caption',
 			option: 'captionEl',
-			onInit: function(el) {  
-				_captionContainer = el; 
-			} 
+			onInit: function(el) {
+				_captionContainer = el;
+			}
 		},
-		{ 
-			name: 'share-modal', 
+		{
+			name: 'share-modal',
 			option: 'shareEl',
-			onInit: function(el) {  
+			onInit: function(el) {
 				_shareModal = el;
 			},
 			onTap: function() {
 				_toggleShareModal();
-			} 
+			}
 		},
-		{ 
-			name: 'button--share', 
+		{
+			name: 'button--share',
 			option: 'shareEl',
-			onInit: function(el) { 
+			onInit: function(el) {
 				_shareButton = el;
 			},
 			onTap: function() {
 				_toggleShareModal();
-			} 
+			}
 		},
-		{ 
-			name: 'button--zoom', 
+		{
+			name: 'button--zoom',
 			option: 'zoomEl',
 			onTap: pswp.toggleDesktopZoom
 		},
-		{ 
-			name: 'counter', 
+		{
+			name: 'counter',
 			option: 'counterEl',
-			onInit: function(el) {  
+			onInit: function(el) {
 				_indexIndicator = el;
-			} 
+			}
 		},
-		{ 
-			name: 'button--close', 
+		{
+			name: 'button--close',
 			option: 'closeEl',
 			onTap: pswp.close
 		},
-		{ 
-			name: 'button--arrow--left', 
+		{
+			name: 'button--arrow--left',
 			option: 'arrowEl',
 			onTap: pswp.prev
 		},
-		{ 
-			name: 'button--arrow--right', 
+		{
+			name: 'button--arrow--right',
 			option: 'arrowEl',
 			onTap: pswp.next
 		},
-		{ 
-			name: 'button--fs', 
+		{
+			name: 'button--fs',
 			option: 'fullscreenEl',
-			onTap: function() {  
+			onTap: function() {
 				if(_fullscrenAPI.isFullscreen()) {
 					_fullscrenAPI.exit();
 				} else {
 					_fullscrenAPI.enter();
 				}
-			} 
+			}
 		},
-		{ 
-			name: 'preloader', 
+		{
+			name: 'preloader',
 			option: 'preloaderEl',
-			onInit: function(el) {  
+			onInit: function(el) {
 				_loadingIndicator = el;
-			} 
+			}
 		}
 
 	];
@@ -510,12 +509,12 @@ var PhotoSwipeUI_Default =
 					if(classAttr.indexOf('pswp__' + uiElement.name) > -1  ) {
 
 						if( _options[uiElement.option] ) { // if element is not disabled from options
-							
+
 							framework.removeClass(item, 'pswp__element--disabled');
 							if(uiElement.onInit) {
 								uiElement.onInit(item);
 							}
-							
+
 							//item.style.display = 'block';
 						} else {
 							framework.addClass(item, 'pswp__element--disabled');
@@ -534,7 +533,7 @@ var PhotoSwipeUI_Default =
 	};
 
 
-	
+
 
 	ui.init = function() {
 
@@ -570,9 +569,9 @@ var PhotoSwipeUI_Default =
 		_listen('preventDragEvent', function(e, isDown, preventObj) {
 			var t = e.target || e.srcElement;
 			if(
-				t && 
-				t.className && e.type.indexOf('mouse') > -1 && 
-				( t.className.indexOf('__caption') > 0 || (/(SMALL|STRONG|EM)/i).test(t.tagName) ) 
+				t &&
+				t.className && e.type.indexOf('mouse') > -1 &&
+				( t.className.indexOf('__caption') > 0 || (/(SMALL|STRONG|EM)/i).test(t.tagName) )
 			) {
 				preventObj.prevent = false;
 			}
@@ -630,7 +629,7 @@ var PhotoSwipeUI_Default =
 			framework.addClass( _controls, 'pswp__ui--hidden');
 			ui.setIdle(false);
 		});
-		
+
 
 		if(!_options.showAnimationDuration) {
 			framework.removeClass( _controls, 'pswp__ui--hidden');
@@ -645,7 +644,7 @@ var PhotoSwipeUI_Default =
 		});
 
 		_listen('parseVerticalMargin', _applyNavBarGaps);
-		
+
 		_setupUIElements();
 
 		if(_options.shareEl && _shareButton && _shareModal) {
@@ -669,7 +668,7 @@ var PhotoSwipeUI_Default =
 	ui.update = function() {
 		// Don't update UI if it's hidden
 		if(_controlsVisible && pswp.currItem) {
-			
+
 			ui.updateIndexIndicator();
 
 			if(_options.captionEl) {
@@ -700,19 +699,19 @@ var PhotoSwipeUI_Default =
 				pswp.setScrollOffset( 0, framework.getScrollY() );
 			}, 50);
 		}
-		
+
 		// toogle pswp--fs class on root element
 		framework[ (_fullscrenAPI.isFullscreen() ? 'add' : 'remove') + 'Class' ](pswp.template, 'pswp--fs');
 	};
 
 	ui.updateIndexIndicator = function() {
 		if(_options.counterEl) {
-			_indexIndicator.innerHTML = (pswp.getCurrentIndex()+1) + 
-										_options.indexIndicatorSep + 
+			_indexIndicator.innerHTML = (pswp.getCurrentIndex()+1) +
+										_options.indexIndicatorSep +
 										_options.getNumItemsFn();
 		}
 	};
-	
+
 	ui.onGlobalTap = function(e) {
 		e = e || window.event;
 		var target = e.target || e.srcElement;
@@ -738,7 +737,7 @@ var PhotoSwipeUI_Default =
 					pswp.toggleDesktopZoom(e.detail.releasePoint);
 				}
 			}
-			
+
 		} else {
 
 			// tap anywhere (except buttons) to toggle visibility of controls
@@ -755,7 +754,7 @@ var PhotoSwipeUI_Default =
 				pswp.close();
 				return;
 			}
-			
+
 		}
 	};
 	ui.onMouseOver = function(e) {
@@ -805,7 +804,7 @@ var PhotoSwipeUI_Default =
 				eventK: 'moz' + tF
 			};
 
-			
+
 
 		} else if(dE.webkitRequestFullscreen) {
 			api = {
@@ -825,21 +824,21 @@ var PhotoSwipeUI_Default =
 		}
 
 		if(api) {
-			api.enter = function() { 
+			api.enter = function() {
 				// disable close-on-scroll in fullscreen
-				_initalCloseOnScrollValue = _options.closeOnScroll; 
-				_options.closeOnScroll = false; 
+				_initalCloseOnScrollValue = _options.closeOnScroll;
+				_options.closeOnScroll = false;
 
 				if(this.enterK === 'webkitRequestFullscreen') {
 					pswp.template[this.enterK]( Element.ALLOW_KEYBOARD_INPUT );
 				} else {
-					return pswp.template[this.enterK](); 
+					return pswp.template[this.enterK]();
 				}
 			};
-			api.exit = function() { 
+			api.exit = function() {
 				_options.closeOnScroll = _initalCloseOnScrollValue;
 
-				return document[this.exitK](); 
+				return document[this.exitK]();
 
 			};
 			api.isFullscreen = function() { return document[this.elementK]; };
